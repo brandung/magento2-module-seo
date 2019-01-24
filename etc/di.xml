@@ -2,6 +2,11 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
    <!-- HREF LANG TAGS -->
    <preference for="Brandung\Seo\HrefLang\Data\HrefLangAlternativeInterface" type="Brandung\Seo\HrefLang\Data\HrefLangAlternative"/>
+   <type name="Brandung\Seo\HrefLang\HrefLangValueProvider">
+      <arguments>
+         <argument name="localeConfigScope" xsi:type="const">Magento\Store\Model\ScopeInterface::SCOPE_STORE</argument>
+      </arguments>
+   </type>
    <type name="Brandung\Seo\HrefLang\HrefLangAlternativesGenerator">
       <arguments>
          <argument name="alternativeUrlProviders" xsi:type="array">
