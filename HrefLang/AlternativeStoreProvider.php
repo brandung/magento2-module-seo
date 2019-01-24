@@ -25,7 +25,7 @@ class AlternativeStoreProvider
     public function getAlternativeStores(): array
     {
         return array_filter($this->storeManager->getStores(), function (Store $store) {
-            return $store->getId() !== $this->storeManager->getStore()->getId();
+            return $store->getId() !== $this->storeManager->getStore()->getId() && $store->isActive();
         });
     }
 
