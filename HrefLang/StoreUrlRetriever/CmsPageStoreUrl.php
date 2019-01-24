@@ -41,7 +41,7 @@ class CmsPageStoreUrl implements StoreUrlInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      * @throws LocalizedException
      */
-    public function getUrl(int $entityId, Store $store)
+    public function getUrl(int $entityId, Store $store): string
     {
         $page = $this->pageRepository->getById($entityId);
         $pageId = $this->pageResource->checkIdentifier($page->getIdentifier(), $store->getId());
