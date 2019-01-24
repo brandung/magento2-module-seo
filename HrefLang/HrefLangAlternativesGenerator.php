@@ -54,9 +54,14 @@ class HrefLangAlternativesGenerator
      * @return HrefLangAlternativeInterface
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getDefaultAlternative(): HrefLangAlternativeInterface
+    public function getDefaultAlternative(): ?HrefLangAlternativeInterface
     {
-        return $this->alternativeUrlProviders[$this->getPageType()]->getDefaultAlternative();
+        try {
+            return $this->getUrlAlternativeProvider()->getDefaultAlternative();
+        } catch (MissingAlternativeProviderException $e) {
+            $this->logger->debug('HrefLang Alternative Provider Missing', ['page_type' => $e->getMessage()]);
+            return null;
+        }
     }
 
     private function getPageType(): string
