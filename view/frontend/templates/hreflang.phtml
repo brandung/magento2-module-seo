@@ -1,0 +1,16 @@
+<?php
+declare(strict_types=1);
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Brandung\Seo\ViewModel\HrefLang $hrefLang */
+$hrefLang = $block->getData('hreflang');
+?>
+<?php if (null !== ($defaultAlternative = $hrefLang->getDefault())): ?>
+    <link rel="alternate"
+          hreflang="x-default"
+          href="<?= $block->escapeHtmlAttr($defaultAlternative->getHref()) ?>" />
+<?php endif?>
+<?php foreach ($hrefLang->getAlternatives() as $alternative): ?>
+    <link rel="alternate"
+          hreflang="<?= $block->escapeHtmlAttr($alternative->getHrefLang()) ?>"
+          href="<?= $block->escapeHtmlAttr($alternative->getHref()) ?>" />
+<?php endforeach; ?>

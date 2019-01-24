@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+   <!-- HREF LANG TAGS -->
+   <preference for="Brandung\Seo\HrefLang\Data\HrefLangAlternativeInterface" type="Brandung\Seo\HrefLang\Data\HrefLangAlternative"/>
+   <type name="Brandung\Seo\HrefLang\HrefLangAlternativesGenerator">
+      <arguments>
+         <argument name="alternativeUrlProviders" xsi:type="array">
+            <item name="catalog_product_view" xsi:type="object">Brandung\Seo\HrefLang\UrlAlternativesProvider\ProductUrlAlternativesProvider</item>
+            <item name="catalog_category_view" xsi:type="object">Brandung\Seo\HrefLang\UrlAlternativesProvider\CategoryUrlAlternativesProvider</item>
+            <item name="cms_page_view" xsi:type="object">Brandung\Seo\HrefLang\UrlAlternativesProvider\CmsPageUrlAlternativesProvider</item>
+            <item name="cms_index_index" xsi:type="object">Brandung\Seo\HrefLang\UrlAlternativesProvider\HomePageUrlAlternativesProvider</item>
+         </argument>
+      </arguments>
+   </type>
+   <!-- ALTERNATIVE PROVIDERS CONFIG -->
+   <type name="Brandung\Seo\HrefLang\UrlAlternativesProvider\ProductUrlAlternativesProvider">
+      <arguments>
+         <argument name="storeUrl" xsi:type="object">Brandung\Seo\HrefLang\StoreUrlRetriever\ProductStoreUrl</argument>
+      </arguments>
+   </type>
+   <type name="Brandung\Seo\HrefLang\UrlAlternativesProvider\CategoryUrlAlternativesProvider">
+      <arguments>
+         <argument name="storeUrl" xsi:type="object">Brandung\Seo\HrefLang\StoreUrlRetriever\CategoryStoreUrl</argument>
+      </arguments>
+   </type>
+   <type name="Brandung\Seo\HrefLang\UrlAlternativesProvider\CmsPageUrlAlternativesProvider">
+      <arguments>
+         <argument name="storeUrl" xsi:type="object">Brandung\Seo\HrefLang\StoreUrlRetriever\CmsPageStoreUrl</argument>
+      </arguments>
+   </type>
+   <!-- //ALTERNATIVE PROVIDERS CONFIG -->
+   <!-- //HREF LANG TAGS -->
+
+   <!-- REMOVE META KEYWORDS -->
+   <type name="Magento\Framework\View\Page\Config">
+      <plugin name="removeMetaKeywords" type="Brandung\Seo\MetaKeywords\Plugin\PageConfig\RemoveMetaKeyWords" sortOrder="9999"/>
+   </type>
+   <!-- //REMOVE META KEYWORDS -->
+</config>

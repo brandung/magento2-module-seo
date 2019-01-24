@@ -1,0 +1,24 @@
+{
+  "name": "brandung/module-seo",
+  "description": "Magento2 Seo",
+  "type": "magento2-module",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "David Verholen",
+      "email": "david.verholen@brandung.de"
+      }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^7.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Brandung\\Seo\\": ""
+    },
+    "files": [
+      "registration.php"
+    ]
+  }
+}
