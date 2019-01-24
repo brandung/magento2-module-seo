@@ -7,5 +7,5 @@ use Magento\Store\Model\Store;
 
 interface StoreUrlInterface
 {
-    public function getUrl(int $entityId, Store $store);
+    public function getUrl(int $entityId, Store $store): string;
 }

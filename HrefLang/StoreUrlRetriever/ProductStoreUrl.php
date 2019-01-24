@@ -33,7 +33,7 @@ class ProductStoreUrl implements StoreUrlInterface
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getUrl(int $entityId, Store $store)
+    public function getUrl(int $entityId, Store $store): string
     {
         /** @var Product $product */
         $product = $this->productRepository->getById($entityId, false, $store->getId());

@@ -33,7 +33,7 @@ class CategoryStoreUrl implements StoreUrlInterface
      * @return string
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function getUrl(int $entityId, Store $store)
+    public function getUrl(int $entityId, Store $store): string
     {
         /** @var Category $category */
         $category = $this->categoryRepository->get($entityId, $store->getId());
