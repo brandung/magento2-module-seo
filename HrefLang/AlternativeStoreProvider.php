@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Brandung\Seo\HrefLang;
 
+use Magento\Store\Api\Data\StoreInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 
@@ -28,6 +29,9 @@ class AlternativeStoreProvider
         });
     }
 
+    /**
+     * @return Store|StoreInterface
+     */
     public function getDefaultStore(): Store
     {
         return $this->storeManager->getDefaultStoreView();
