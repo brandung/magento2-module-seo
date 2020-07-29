@@ -29,10 +29,17 @@ class HrefLangValueProvider
     public function getValue(Store $store): string
     {
         $localeCode = $this->scopeConfig->getValue(
-            \Magento\Directory\Helper\Data::XML_PATH_DEFAULT_LOCALE,
+            'general/locale/code_for_hreflang',
             $this->localeConfigScope,
             $this->getScopeCode($store)
         );
+        if (!$localeCode) {
+            $localeCode = $this->scopeConfig->getValue(
+                \Magento\Directory\Helper\Data::XML_PATH_DEFAULT_LOCALE,
+                $this->localeConfigScope,
+                $this->getScopeCode($store)
+            );
+        }
         return strtolower(str_replace('_', '-', $localeCode));
     }
 
