@@ -18,13 +18,19 @@ class ProductStoreUrl implements StoreUrlInterface
      * @var ProductUrlPathGenerator
      */
     private $urlPathGenerator;
+    /**
+     * @var Product\Visibility
+     */
+    private $visibility;
 
     public function __construct(
         ProductRepositoryInterface $productRepository,
-        ProductUrlPathGenerator $urlPathGenerator
+        ProductUrlPathGenerator $urlPathGenerator,
+        Product\Visibility $visibility
     ) {
         $this->productRepository = $productRepository;
         $this->urlPathGenerator = $urlPathGenerator;
+        $this->visibility = $visibility;
     }
 
     /**
@@ -37,6 +43,15 @@ class ProductStoreUrl implements StoreUrlInterface
     {
         /** @var Product $product */
         $product = $this->productRepository->getById($entityId, false, $store->getId());
+        if (!in_array($store->getWebsiteId(), $product->getWebsiteIds())) {
+            throw new \Magento\Framework\Exception\NoSuchEntityException(__('Product is not assigned to website.'));
+        }
+        if ($product->getStatus() != Product\Attribute\Source\Status::STATUS_ENABLED) {
+            throw new \Magento\Framework\Exception\NoSuchEntityException(__('Product is disabled.'));
+        }
+        if (!in_array($product->getVisibility(), $this->visibility->getVisibleInCatalogIds())) {
+            throw new \Magento\Framework\Exception\NoSuchEntityException(__('Product is not visible.'));
+        }
         $path = $this->urlPathGenerator->getUrlPathWithSuffix($product, $store->getId());
         return $store->getBaseUrl() . $path;
     }

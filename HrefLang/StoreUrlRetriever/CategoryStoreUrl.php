@@ -7,6 +7,7 @@ use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Model\Category;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
 use Magento\Store\Model\Store;
+use Magento\Store\Model\StoreManager;
 
 class CategoryStoreUrl implements StoreUrlInterface
 {
@@ -18,13 +19,19 @@ class CategoryStoreUrl implements StoreUrlInterface
      * @var CategoryUrlPathGenerator
      */
     private $urlPathGenerator;
+    /**
+     * @var StoreManager
+     */
+    private $storeManager;
 
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
-        CategoryUrlPathGenerator $urlPathGenerator
+        CategoryUrlPathGenerator $urlPathGenerator,
+        StoreManager $storeManager
     ) {
         $this->categoryRepository = $categoryRepository;
         $this->urlPathGenerator = $urlPathGenerator;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -37,6 +44,13 @@ class CategoryStoreUrl implements StoreUrlInterface
     {
         /** @var Category $category */
         $category = $this->categoryRepository->get($entityId, $store->getId());
+        if (!$category->getIsActive()) {
+            throw new \Magento\Framework\Exception\NoSuchEntityException(__('Category is disabled.'));
+        }
+        $storeGroup = $this->storeManager->getGroup($store->getGroupId());
+        if (!in_array($storeGroup->getRootCategoryId(), $category->getPathIds())) {
+            throw new \Magento\Framework\Exception\NoSuchEntityException(__('Category is not below root category.'));
+        }
         $path = $this->urlPathGenerator->getUrlPathWithSuffix($category);
         return $store->getBaseUrl() . $path;
     }
