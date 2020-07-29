@@ -9,6 +9,8 @@ use Magento\Store\Model\Store;
 
 class HrefLangValueProvider
 {
+    const XML_PATH_LOCALE_FOR_HREFLANG = 'general/locale/code_for_hreflang';
+
     /**
      * @var ScopeConfigInterface
      */
@@ -29,7 +31,7 @@ class HrefLangValueProvider
     public function getValue(Store $store): string
     {
         $localeCode = $this->scopeConfig->getValue(
-            'general/locale/code_for_hreflang',
+            self::XML_PATH_LOCALE_FOR_HREFLANG,
             $this->localeConfigScope,
             $this->getScopeCode($store)
         );
