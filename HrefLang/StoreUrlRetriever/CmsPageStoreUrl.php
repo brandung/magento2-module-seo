@@ -72,6 +72,12 @@ class CmsPageStoreUrl implements StoreUrlInterface
         return $store->getBaseUrl() . $path;
     }
 
+    /**
+     * @param string $globalIdentifier
+     * @param Store $store
+     * @return Page
+     * @throws NoSuchEntityException
+     */
     public function getPageByGlobalIdentifier(string $globalIdentifier, Store $store): Page
     {
         if (!$globalIdentifier) {
