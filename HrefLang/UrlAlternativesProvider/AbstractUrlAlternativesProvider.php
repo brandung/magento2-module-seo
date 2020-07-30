@@ -56,9 +56,13 @@ abstract class AbstractUrlAlternativesProvider implements UrlAlternativesProvide
      */
     public function getAlternatives(): array
     {
-        return array_map(function (Store $store) {
-            return $this->getAlternativeForStore($store);
-        }, $this->alternativeStoreProvider->getAlternativeStores());
+        return array_filter(array_map(function (Store $store) {
+            try {
+                return $this->getAlternativeForStore($store);
+            } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                return false;
+            }
+        }, $this->alternativeStoreProvider->getAlternativeStores()));
     }
 
     /**
